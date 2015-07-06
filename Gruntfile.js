@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
 	var npmDependencies = require('./package.json').devDependencies;
+	require('load-grunt-tasks')(grunt);
 
 	grunt.initConfig({
 
@@ -28,6 +29,19 @@ module.exports = function(grunt) {
 				options : {
 					livereload : true
 				}
+			}
+		},
+
+		'ftp-deploy' : {
+			build: {
+				auth: {
+					host: 'server.com',
+					port: 21,
+					authkey: 'key1'
+				},
+				src: 'path/to/source/folder',
+				dest: 'path/to/dest/folder',
+				exclusions: ['path/to/source/folder/**/.DS_Store', 'path/to/source/folder/**/Thumbs.db', 'path/to/dist/tmp']
 			}
 		},
 
@@ -148,14 +162,6 @@ module.exports = function(grunt) {
 		arr.push('bower-install');
 		return grunt.task.run(arr);
 	});
-
-	grunt.loadNpmTasks('grunt-contrib-sass');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-bower-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-imagemin');
-	grunt.loadNpmTasks('grunt-svgmin');
 
 	// Run bower install
 	grunt.registerTask('bower-install', function() {
