@@ -17,11 +17,11 @@ The officially un-official [Yeoman](https://github.com/yeoman/yeoman) Generator 
 
 If you do not already have the Yeoman toolset installed do so now, and might as well install me at the same time *(NOTE: don't type the `$`)*:
 
-	$ npm install -g yo generator-wordpress
+	$ npm install -g yo generator-wordpress-bob
 
 While running if you get errors try running as super user:
 
-	$ sudo npm install -g yo generator-wordpress
+	$ sudo npm install -g yo generator-wordpress-bob
 
 And run me:
 
