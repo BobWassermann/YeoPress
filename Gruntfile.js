@@ -1,15 +1,6 @@
 module.exports = function(grunt) {
 
-	// To support SASS/SCSS or Stylus, just install
-	// the appropriate grunt package and it will be automatically included
-	// in the build process, Sass is included by default:
-	//
-	// * for SASS/SCSS support, run `npm install --save-dev grunt-contrib-sass`
-	// * for Stylus/Nib support, `npm install --save-dev grunt-contrib-stylus`
-
 	var npmDependencies = require('./package.json').devDependencies;
-	var hasSass = npmDependencies['grunt-contrib-sass'] !== undefined;
-	var hasStylus = npmDependencies['grunt-contrib-stylus'] !== undefined;
 
 	grunt.initConfig({
 
@@ -17,11 +8,7 @@ module.exports = function(grunt) {
 		watch : {
 			sass : {
 				files : ['scss/**/*.scss'],
-				tasks : (hasSass) ? ['sass:dev'] : null
-			},
-			stylus : {
-				files : ['stylus/**/*.styl'],
-				tasks : (hasStylus) ? ['stylus:dev'] : null
+				tasks : ['sass:dev']
 			},
 			css : {
 				files : ['css/**/*.css'],
@@ -94,38 +81,6 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Dev and production build for stylus
-		stylus : {
-			production : {
-				files : [
-					{
-						src : ['**/*.styl', '!**/_*.styl'],
-						cwd : 'stylus',
-						dest : 'css',
-						ext: '.css',
-						expand : true
-					}
-				],
-				options : {
-					compress : true
-				}
-			},
-			dev : {
-				files : [
-					{
-						src : ['**/*.styl', '!**/_*.styl'],
-						cwd : 'stylus',
-						dest : 'css',
-						ext: '.css',
-						expand : true
-					}
-				],
-				options : {
-					compress : false
-				}
-			},
-		},
-
 		// Bower task sets up require config
 		bower : {
 			all : {
@@ -181,46 +136,20 @@ module.exports = function(grunt) {
 	// Build task
 	grunt.registerTask('build', function() {
 		var arr = ['jshint'];
-
-		if (hasSass) {
-			arr.push('sass:production');
-		}
-
-		if (hasStylus) {
-			arr.push('stylus:production');
-		}
-
+		arr.push('sass:production');
 		arr.push('imagemin:production', 'svgmin:production', 'requirejs:production');
-
 		return grunt.task.run(arr);
 	});
 
 	// Template Setup Task
 	grunt.registerTask('setup', function() {
 		var arr = [];
-
-		if (hasSass) {
-			arr.push('sass:dev');
-		}
-
-		if (hasStylus) {
-			arr.push('stylus:dev');
-		}
-
+		arr.push('sass:dev');
 		arr.push('bower-install');
-
 		return grunt.task.run(arr);
 	});
 
-	// Load up tasks
-	if (hasSass) {
-		grunt.loadNpmTasks('grunt-contrib-sass');
-	}
-
-	if (hasStylus) {
-		grunt.loadNpmTasks('grunt-contrib-stylus');
-	}
-
+	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-bower-requirejs');
