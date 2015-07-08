@@ -5,11 +5,19 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
+		autoprefixer: {
+			dist: {
+				files: {
+					'css/global.css' : 'css/global.css'
+				}
+			}
+		},
+
 		// Watches for changes and runs tasks
 		watch : {
 			sass : {
 				files : ['scss/**/*.scss'],
-				tasks : ['sass:dev']
+				tasks : ['sass:dev', 'autoprefixer']
 			},
 			css : {
 				files : ['css/**/*.css'],
@@ -145,7 +153,7 @@ module.exports = function(grunt) {
 	});
 
 	// Default task
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('default', ['watch', 'autoprefixer']);
 
 	// Build task
 	grunt.registerTask('build', function() {
