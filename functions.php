@@ -20,6 +20,9 @@ function theme_enqueue_scripts(){
 //Add Featured Image Support
 add_theme_support('post-thumbnails');
 
+// Remove admin bar
+add_filter('show_admin_bar', '__return_false');
+
 // Clean up the <head>
 function removeHeadLinks() {
 	remove_action('wp_head', 'rsd_link');
